@@ -1,71 +1,94 @@
-# Laboratorio Pytest — Sesión 1
+#  Laboratorio Pytest — Sesión 1
 
-Proyecto listo para abrir en VS Code y trabajar la guía "Actividades Sesión 1 - Módulo II".
-Yeimy Alejandra padilla gutierrez 
+> **Módulo II:** Actividades de Descubrimiento de Pruebas y Patrón Arrange-Act-Assert (AAA)  
+> **Estudiante / Autora:** Yeimy Alejandra Padilla Gutiérrez  
+> **Proyecto:** `laboratorio-descubrimiento`
 
-## 1. Preparar el entorno
+---
 
-Abre una terminal en la carpeta raíz del proyecto (`laboratorio-descubrimiento/`) y ejecuta:
+##  Descripción General
 
-```bash
+Este proyecto contiene la estructura base para desarrollar las actividades prácticas correspondientes a la **Sesión 1 (Módulo II)**. El objetivo principal es comprender cómo **Pytest** descubre de forma automática las pruebas unitarias y cómo aplicar el patrón **Arrange-Act-Assert (AAA)** en funciones de facturación.
+
+---
+
+##  1. Preparación del Entorno
+
+Abre una terminal en la raíz del proyecto (`laboratorio-descubrimiento/`) y sigue estos pasos:
+
+### 1.1 Crear y activar el entorno virtual
+
+* **Windows:**
+  ```bash
+  python -m venv venv
+  venv\Scripts\activate
+macOS / Linux:
+
+Bash
 python -m venv venv
-# Windows
-venv\Scripts\activate
-# macOS / Linux
 source venv/bin/activate
-
+1.2 Instalar dependencias
+Bash
 pip install -r requirements.txt
-```
+2. Actividad 1.1 — Descubrimiento de Pruebas (Test Discovery)
+Al iniciar, el directorio contiene archivos creados tal como los solicita la guía (sin corregir):
 
-## 2. Actividad 1.1 — Descubrimiento de pruebas
+tests/test_operations.py
 
-Los archivos ya están creados tal como los pide la guía (sin corregir):
+tests/operations_test.py
 
-- `tests/test_operations.py`
-- `tests/operations_test.py`
-- `tests/pruebas_matematicas.py`  ← nombre y función que Pytest NO reconoce
+tests/pruebas_matematicas.py (Nombre y función que Pytest no reconoce inicialmente)
 
-Ejecuta:
+Pasos a ejecutar:
+Primera recolección:
 
-```bash
+Bash
 python -m pytest -v
-```
+Observación: Notarás que solo se recolectan 2 pruebas.
 
-Verás que solo se recolectan 2 pruebas. Cuando la guía lo indique, renombra tú mismo (siguiendo el
-paso 4 del procedimiento):
+Renombrar archivos y funciones (Paso 4 del procedimiento):
 
-- `tests/pruebas_matematicas.py` → `tests/test_matematicas.py`
-- función `comprobar_multiplicacion()` → `test_multiply_two_numbers()`
+Renombra: tests/pruebas_matematicas.py ➔ tests/test_matematicas.py
 
-Vuelve a ejecutar `python -m pytest -v` y compara el resultado (deberían collectarse 3 pruebas).
+Renombra la función interna: comprobar_multiplicacion() ➔ test_multiply_two_numbers()
+
+Verificación:
+
+Bash
+python -m pytest -v
+Resultado esperado: Ahora Pytest recolectará 3 pruebas.
 
 Ejecuciones selectivas:
 
-```bash
+Por ruta específica:
+
+Bash
 python -m pytest tests/test_operations.py::test_add_two_positive_numbers -v
+Por coincidencia de nombre (-k):
+
+Bash
 python -m pytest -k "multiply" -v
-```
+ 3. Actividad 1.2 — Patrón Arrange-Act-Assert (AAA)
+Código fuente: app/invoice.py (Funciones de facturación)
 
-## 3. Actividad 1.2 — Arrange-Act-Assert
+Pruebas: tests/test_invoice.py (Contiene las 3 pruebas resueltas bajo el patrón AAA)
+ Sugerencia de práctica:
 
-`app/invoice.py` contiene las funciones de facturación.
-`tests/test_invoice.py` ya trae las 3 pruebas resueltas con Arrange-Act-Assert, como referencia.
+Si deseas resolver el ejercicio desde cero, borra el contenido de tests/test_invoice.py y escríbelo tú misma siguiendo la guía. Utiliza la versión original únicamente como referencia final.
 
-Si quieres practicar el ejercicio desde cero, borra el contenido de `test_invoice.py` y escríbelo
-tú mismo siguiendo el "Procedimiento orientado" de la guía; usa este archivo solo para comparar al final.
+Simulación de Fallo Controlado (Paso 6):
+Modifica temporalmente un valor esperado en tests/test_invoice.py.
 
-Para el fallo controlado (paso 6): cambia temporalmente un valor esperado (por ejemplo, en
-`test_calculate_tax_returns_percentage_of_subtotal` cambia `19000` por `19500`), ejecuta:
+Ejemplo: En test_calculate_tax_returns_percentage_of_subtotal, cambia 19000 por 19500.
 
-```bash
+Ejecuta la prueba:
+
+Bash
 python -m pytest tests/test_invoice.py -v
-```
+Observa la salida FAILED, analiza la diferencia mostrada por assert ... == ... y restaura el valor correcto.
 
-observa el `FAILED` y el mensaje `assert ... == ...`, y luego restaura el valor correcto.
-
-## Estructura
-
-```
+ Estructura del Proyecto
+Plaintext
 laboratorio-descubrimiento/
 ├── app/
 │   ├── __init__.py
@@ -79,4 +102,3 @@ laboratorio-descubrimiento/
 ├── pytest.ini
 ├── requirements.txt
 └── README.md
-```
